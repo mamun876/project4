@@ -1,0 +1,42 @@
+Laravel Auth with Breeze
+
+1. New laravel Project - Breeze mutli_auth
+composer create-project laravel/laravel Breeze_multi_auth
+2.  cd Breeze_multi_auth
+3. DB configuration with ENV
+4. php artisan serve
+5. Breeze Installing
+a. composer require laravel/breeze --dev
+b. php artisan breeze:install
+ 
+php artisan migrate
+npm install
+npm run dev
+
+6. Migration for admin and update User
+php artisan make:migration create_admins_table
+7. Model Creation for admin
+php artisan make:model Admin
+Model Admin update as per User model
+will add $guard admin
+8. copy and paste these form UseModel
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+9. Create Guard in config/auth
+10, Middleware create fopr admin and register in karknel
+php artisan make:middleware Admin.
+in kernel.php file in [middlewareAliases]
+ 'admin' => \App\Http\Middleware\Admin::class,
+
+11. Controller, Routes
+php artisan make:conroller AdminController
+
+Route::prefix('admin')->group(function(){
+Route::get('login', [AdminController::class, 'index'])->name('admin_login.form');
+Route::get('login/owner', [AdminController::class, 'login'])->name('admin.login');
+Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+});
+12. Admin blade
